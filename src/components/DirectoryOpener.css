@@ -1,6 +1,7 @@
 .directory-opener-wrapper {
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 
 .directory-opener-wrapper.dark {

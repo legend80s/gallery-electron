@@ -47,10 +47,19 @@ function App() {
           !photos.length ?
             <DirectoryOpener onClick={openDirectory} theme={theme} />:
 
-            <div>
-              <Gallery theme={theme} photos={photos} />
-              <CinemaHall theme={theme} />
-            </div>
+            <>
+              <div
+                role="button"
+                aria-label="go back to open directory"
+                title="Previous page"
+                className="back"
+              ></div>
+
+              <div>
+                <Gallery theme={theme} photos={photos} />
+                <CinemaHall theme={theme} />
+              </div>
+            </>
         }
       </main>
 
