@@ -9,18 +9,20 @@
 
 .main {
   padding: 0.2% 6% 76px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
 }
 
 .main .back {
   width: 3vw;
   height: 3vw;
-  margin-right: 4vw;
   background-image: url('./images/back-32.png');
   background-size: contain;
   background-repeat: no-repeat;
+
+  position: fixed;
+  top: calc(50vh - 60px - 1.5vw);
+  left: 2%;
+
+  cursor: pointer;
 }
 
 @media screen and (max-width: 600px) {
