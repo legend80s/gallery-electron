@@ -38,6 +38,10 @@ function App() {
     }
   }
 
+  const goBack = () => {
+    setPhotos([]);
+  };
+
   console.log('photos:', photos);
 
   return (
@@ -53,6 +57,7 @@ function App() {
                 aria-label="go back to open directory"
                 title="Previous page"
                 className="back"
+                onClick={goBack}
               ></div>
 
               <div>
