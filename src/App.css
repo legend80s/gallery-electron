@@ -8,7 +8,7 @@
 }
 
 .main {
-  padding: 0.2% 6% 76px;
+  /* padding: 0.2% 6% 76px; */
 }
 
 .main .back {
@@ -30,7 +30,7 @@
 }
 
 @media screen and (max-width: 600px) {
-  .main {
+  .gallery {
     padding-left: 0.3vw;
     padding-right: 0.3vw;
   }
