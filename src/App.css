@@ -1,0 +1,19 @@
+.App {
+  height: 100vh;
+  text-align: center;
+}
+
+.App.dark {
+  background-color: #333;
+}
+
+.main {
+  padding: 0.2% 6% 76px;
+}
+
+@media screen and (max-width: 600px) {
+  .main {
+    padding-left: 0.3vw;
+    padding-right: 0.3vw;
+  }
+}

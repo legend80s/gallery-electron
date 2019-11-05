@@ -1,0 +1,26 @@
+.directory-opener-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.directory-opener-wrapper.dark {
+  color: #09d3ac;
+}
+
+.directory-opener {
+  width: 45%;
+  height: 14rem;
+  margin-top: 6%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font: small-caps bold 1.5rem cursive, monaco, consolas;
+  border: .2rem dashed #616778;
+  cursor: pointer;
+}
+
+.directory-opener:hover {
+  border-color: #6167789e;
+}

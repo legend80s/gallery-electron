@@ -1,0 +1,47 @@
+{
+  "name": "gallery",
+  "productName": "Gallery 😘",
+  "version": "0.0.1",
+  "description": "Gallery created with ❤️ and powered by Electron and React.js",
+  "main": "main.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "private": true,
+  "scripts": {
+    "start": "concurrently \"BROWSER=none npm run start:react\" \"wait-on http://localhost:3000 && npm start electron\"",
+    "start:electron": "electron .",
+    "start:react": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.0",
+    "electron": "^7.0.1",
+    "image-size": "^0.8.3",
+    "is-image": "^3.0.0",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-images": "^1.0.0",
+    "react-photo-gallery": "^8.0.0",
+    "react-scripts": "3.2.0",
+    "react-toggle": "^4.1.1",
+    "wait-on": "^3.3.0"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
