@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './DirectoryOpener.css';
+import './DirectoryOpener.scss';
 
 export function DirectoryOpener({ theme, onClick }) {
   return <div className={ `directory-opener-wrapper ${theme}` }>

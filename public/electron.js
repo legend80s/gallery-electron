@@ -2,25 +2,41 @@ const { app, BrowserWindow } = require('electron')
 
 // 保持对window对象的全局引用，如果不这么做的话，当JavaScript对象被
 // 垃圾回收的时候，window对象将会自动的关闭
-let win
+let win;
+const isDev = process.env.ELECTRON_ENV === 'development';
+
+const LIGHT_BG_COLOR = '#ffefd5';
+const DARK_BG_COLOR = '#333333';
+
+const THEME_LIGHT = 'light';
+const THEME_DARK = 'dark';
+
+const theme = getTheme();
 
 function createWindow () {
   // 创建浏览器窗口。
   win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1000,
+    height: 666,
+    backgroundColor: theme === THEME_LIGHT ? LIGHT_BG_COLOR : DARK_BG_COLOR,
     webPreferences: {
       nodeIntegration: true,
       // Development can be false to enable load image from local file system
-      webSecurity: false,
-    }
-  })
+      webSecurity: !isDev,
+    },
+    show: true,
+  });
 
   // 加载index.html文件
-  win.loadURL('http://localhost:3000/')
+  if (isDev) {
+    win.loadURL('http://localhost:3000/');
+    // win.webContents.openDevTools();
+  } else {
+    win.loadFile('./build/index.html');
+  }
 
   // 打开开发者工具
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 
   // 当 window 被关闭，这个事件会被触发。
   win.on('closed', () => {
@@ -55,3 +71,6 @@ app.on('activate', () => {
 
 // 在这个文件中，你可以续写应用剩下主进程代码。
 // 也可以拆分成几个文件，然后用 require 导入。
+function getTheme() {
+  return THEME_LIGHT;
+}

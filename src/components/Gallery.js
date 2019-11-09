@@ -2,14 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Carousel, { Modal, ModalGateway } from 'react-images';
 import PhotoWall from "react-photo-gallery";
 
-import fetch from '../utils/fetch'
-import token from '../utils/token';
-import { showDemoPhotos } from './gallery-from-demo-api';
+// import fetch from '../utils/fetch'
+// import { showDemoPhotos } from './gallery-from-demo-api';
 
 import './Gallery.css';
-
-export const THEME_LIGHT = 'light';
-export const THEME_DARK = 'dark';
 
 export function Gallery({ theme, photos }) {
   // const [photos, setPhotos] = useState([]);
@@ -17,7 +13,6 @@ export function Gallery({ theme, photos }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
-    // showPhotos(setPhotos);
     // showDemoPhotos(setPhotos);
   }, []);
 
@@ -41,35 +36,4 @@ export function Gallery({ theme, photos }) {
       onClick={(_, { index }) => toggleModal(index)}
     /> : null}
   </div>);
-}
-
-/**
- * Fetch photos from remote.
- *
- * @returns {Promise<string[]>}
- */
-export async function fetchPhotos(path) {
-  try {
-    return await fetch(path);
-  } catch (error) {
-    console.error('fetchPhotos', error);
-
-    return [];
-  }
-}
-
-function showPhotos(setPhotos) {
-  const path = '/api/images';
-  fetchPhotos(path).then(photos => {
-    // console.log('urls:', urls);
-
-    setPhotos(photos.map(photo => {
-      const { src } = photo;
-
-      return {
-        ...photo,
-        src: src + (src.includes('?') ? '&' : '?') + `token=${token}`,
-      };
-    }));
-  });
 }

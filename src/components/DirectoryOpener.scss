@@ -1,3 +1,6 @@
+@import '../common/stylesheets/vars.scss';
+@import '../common/stylesheets/mixins.scss';
+
 .directory-opener-wrapper {
   display: flex;
   justify-content: center;
@@ -5,7 +8,7 @@
 }
 
 .directory-opener-wrapper.dark {
-  color: #09d3ac;
+  color: $bright-color;
 }
 
 .directory-opener {
@@ -20,6 +23,7 @@
   font: small-caps bold 1.5rem monaco, consolas;
   border: .2rem dashed #616778;
   cursor: pointer;
+  @include color-transition;
 }
 
 .directory-opener:hover {

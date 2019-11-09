@@ -1,5 +1,6 @@
-$bright-color: #09d3ac;
-$brighter-color: #02ffcf;
+
+@import './common/stylesheets/mixins.scss';
+@import './common/stylesheets/vars.scss';
 
 @mixin menu-width {
   width: 5vmax;
@@ -10,10 +11,17 @@ $brighter-color: #02ffcf;
   display: flex;
   min-height: 100vh;
   text-align: center;
+  background-color: $light;
+
+  @include color-transition;
 }
 
 .App.dark {
-  background-color: #333;
+  background-color: $dark;
+
+  .main {
+    background-color: $dark;
+  }
 
   .icon-wrapper {
     &.active {
@@ -49,11 +57,13 @@ $brighter-color: #02ffcf;
 
 .main {
   flex: 1;
+  background-color: $light;
+  @include color-transition;
 }
 
 .no-photo-tips {
   margin-top: 12%;
-  font: small-caps bold 1.5rem monaco, consolas;
+  font: small-caps bold 2vmax monaco, consolas;
 
   .go-home-btn {
     background: none;
@@ -69,13 +79,14 @@ $brighter-color: #02ffcf;
   display: flex;
   flex-direction: column;
   padding: 5% 0;
-  border-right: 1px solid #eeeeee;
+  border-right: 1px solid #ffdea9;
   box-sizing: border-box;
 
   @include menu-width();
+  @include color-transition;
 
   .icon-wrapper {
-    padding: 1vw 1.2vw;
+    padding: 2vw 1.2vw;
     border: 0.2vw solid transparent;
     cursor: pointer;
 

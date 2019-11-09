@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Gallery, THEME_LIGHT, THEME_DARK } from './components/Gallery';
+import { Gallery } from './components/Gallery';
 
 import './App.scss';
 import "react-toggle/style.css";
-import { CinemaHall } from './components/CinemaHall';
+// import { CinemaHall } from './components/CinemaHall';
 import { DirectoryOpener } from './components/DirectoryOpener';
 import { AppFooter } from './components/AppFooter';
 
@@ -19,10 +19,16 @@ const { extractName } = require('./utils/file');
 const MENU_KEY_HOME = 'home';
 const MENU_KEY_GALLERY = 'gallery';
 
+export const THEME_LIGHT = 'light';
+export const THEME_DARK = 'dark';
+const currentTheme = getTheme();
+
 function App() {
+  console.log('currentTheme:', currentTheme);
+
   const [isFooterVisible] = useState(true);
   const [photos, setPhotos] = useState([]);
-  const [theme, setTheme] = useState(THEME_LIGHT);
+  const [theme, setTheme] = useState(currentTheme);
   const [currentMenuKey, setCurrentMenuKey] = useState(MENU_KEY_HOME);
 
   const toggleTheme = () => {
@@ -86,13 +92,13 @@ function App() {
 
               <div>
                 <Gallery theme={theme} photos={photos} />
-                <CinemaHall theme={theme} />
+                {/* <CinemaHall theme={theme} /> */}
               </div>}
             </div>
         }
       </main>
 
-      {isFooterVisible && <AppFooter onThemeToggle={toggleTheme}></AppFooter>}
+      {isFooterVisible && <AppFooter theme={theme} onThemeToggle={toggleTheme}></AppFooter>}
     </div>
   );
 }
@@ -163,4 +169,8 @@ function normalizePath(mediaFolder, filePath) {
     src,
     caption: extractName(filePath),
   };
+}
+
+function getTheme() {
+  return THEME_LIGHT;
 }
