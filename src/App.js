@@ -57,8 +57,8 @@ function App() {
 
   return (
     <div className={ `App ${theme}` }>
-      <nav className="menu">
-        <ul>
+      <nav className="menu-wrapper">
+        <ul className="menu">
           <li
             className={ `icon-wrapper ${ getActiveCls(MENU_KEY_HOME) }` }
             onClick={ gotoHome }

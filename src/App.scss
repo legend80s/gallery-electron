@@ -1,9 +1,14 @@
 $bright-color: #09d3ac;
 $brighter-color: #02ffcf;
 
+@mixin menu-width {
+  width: 5vmax;
+  min-width: 40px;
+}
+
 .App {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   text-align: center;
 }
 
@@ -24,7 +29,7 @@ $brighter-color: #02ffcf;
     }
   }
 
-  .menu {
+  .menu-wrapper {
     border-right-color: #09d3ac54;
   }
 
@@ -35,6 +40,11 @@ $brighter-color: #02ffcf;
       color: $brighter-color;
     }
   }
+}
+
+.menu {
+  position: fixed;
+  @include menu-width();
 }
 
 .main {
@@ -55,14 +65,14 @@ $brighter-color: #02ffcf;
   }
 }
 
-.menu {
+.menu-wrapper {
   display: flex;
   flex-direction: column;
-  width: 5vmax;
-  min-width: 40px;
   padding: 5% 0;
   border-right: 1px solid #eeeeee;
   box-sizing: border-box;
+
+  @include menu-width();
 
   .icon-wrapper {
     padding: 1vw 1.2vw;
