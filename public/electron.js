@@ -5,6 +5,7 @@ const storage = require('electron-storage-promised');
 // 垃圾回收的时候，window对象将会自动的关闭
 let win;
 let cachedTheme;
+let cachedPhotos = [];
 
 const isDev = process.env.ELECTRON_ENV === 'development';
 
@@ -70,7 +71,7 @@ app.on('activate', () => {
 const THEME_LIGHT = 'light';
 const THEME_DARK = 'dark';
 
-async function fetchTheme() {
+async function fetchThemeFromStorage() {
   try {
     const theme = await storage.get('theme');
 
@@ -88,7 +89,7 @@ async function getThemeBgColor() {
   const LIGHT_BG_COLOR = '#ffefd5';
   const DARK_BG_COLOR = '#333333';
 
-  const theme = await fetchTheme();
+  const theme = await fetchThemeFromStorage();
 
   return theme === THEME_DARK ? DARK_BG_COLOR : LIGHT_BG_COLOR;
 }
@@ -96,7 +97,7 @@ async function getThemeBgColor() {
 /**
  * @param {string} theme
  */
-exports.saveThemeToCache = function saveThemeToCache(theme) {
+exports.saveThemeToCache = (theme) => {
   console.log('saveThemeToCache:', theme);
   cachedTheme = theme;
 }
@@ -104,17 +105,24 @@ exports.saveThemeToCache = function saveThemeToCache(theme) {
 /**
  * @param {string} theme
  */
-exports.getLatestTheme = function getLatestTheme() {
+exports.getMemorizedTheme = () => {
   return cachedTheme;
 }
 
-exports.fetchTheme = fetchTheme;
+exports.memorizePhotos = (photos) => {
+  cachedPhotos = photos;
+}
+exports.getMemorizedPhotos = () => {
+  return cachedPhotos;
+}
+
+exports.fetchThemeFromStorage = fetchThemeFromStorage;
 
 function saveTheme(theme) {
   if (!theme) { return; }
   // console.log('saveTheme to storage:', theme);
 
   storage.set('theme', theme)
-    .then(() => { console.log('theme', theme, ' saved successfully'); })
+    .then(() => { console.log('theme', theme, 'saved successfully'); })
     .catch((error) => { console.error('saveTheme', error); });
 }

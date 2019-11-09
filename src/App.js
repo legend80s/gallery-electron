@@ -15,28 +15,42 @@ const isImage = require('is-image');
 const { promisify } = window.require('util');
 const sizeOf = promisify(window.require('image-size'));
 const { extractName } = require('./utils/file');
-const { saveThemeToCache, fetchTheme, getLatestTheme } = remote.require('../public/electron');
+const {
+  saveThemeToCache,
+  fetchThemeFromStorage,
+  getMemorizedTheme,
+  memorizePhotos,
+  getMemorizedPhotos,
+} = remote.require('../public/electron');
 
 const MENU_KEY_HOME = 'home';
 const MENU_KEY_GALLERY = 'gallery';
 
 export const THEME_LIGHT = 'light';
 export const THEME_DARK = 'dark';
-const previousTheme = getLatestTheme();
+
+const memorizedTheme = getMemorizedTheme();
+const memorizedPhotos = getMemorizedPhotos();
 
 function App() {
-  // console.log('previousTheme:', previousTheme);
+  // console.log('memorizedTheme:', memorizedTheme);
   const [isFooterVisible] = useState(true);
-  const [photos, setPhotos] = useState([]);
-  const [theme, setTheme] = useState(previousTheme);
+  const [photos, setPhotos] = useState(memorizedPhotos || []);
+  const [theme, setTheme] = useState(memorizedTheme);
   const [currentMenuKey, setCurrentMenuKey] = useState(MENU_KEY_HOME);
 
+  // console.log('photos:', photos, 'theme', theme, 'memorizedPhotos', memorizedPhotos);
+
   useEffect(() => {
-    fetchTheme().then(theme => {
-      // console.log('fetchTheme in renderer:', theme);
+    fetchThemeFromStorage().then(theme => {
+      // console.log('fetchThemeFromStorage in renderer:', theme);
       setTheme(theme);
     });
   }, []);
+
+  useEffect(() => {
+    photos.length && setCurrentMenuKey(MENU_KEY_GALLERY);
+  }, [photos.length]);
 
   const toggleTheme = () => {
     const newTheme = theme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT;
@@ -57,7 +71,10 @@ function App() {
       const photos = await formatPhotos(mediaFolder, photoPaths);
 
       setPhotos(photos);
-      photos.length && setCurrentMenuKey(MENU_KEY_GALLERY);
+
+      console.log('memorizePhotos:', photos);
+
+      memorizePhotos(photos);
     }
   }
 
@@ -69,8 +86,6 @@ function App() {
   const gotoHome = () => {
     setCurrentMenuKey(MENU_KEY_HOME);
   };
-
-  // console.log('photos:', photos, theme);
 
   return (
     <div className={ `App ${theme}` }>
@@ -180,8 +195,4 @@ function normalizePath(mediaFolder, filePath) {
     src,
     caption: extractName(filePath),
   };
-}
-
-function getTheme() {
-  return THEME_LIGHT;
 }

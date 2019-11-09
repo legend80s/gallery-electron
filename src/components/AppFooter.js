@@ -5,14 +5,14 @@ import './AppFooter.css';
 import { THEME_DARK } from '../App';
 
 export function AppFooter({ theme, onThemeToggle }) {
-  console.log('theme:', theme, 'THEME_DARK', THEME_DARK);
+  // console.log('theme:', theme, 'THEME_DARK', THEME_DARK);
   return <footer className="App-footer">
     <div className="toggle-wrapper">
       <span>Theme</span>
 
       <Toggle
         className="toggle"
-        defaultChecked={theme === THEME_DARK}
+        checked={theme === THEME_DARK}
         icons={false}
         onChange={onThemeToggle}
       />

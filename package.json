@@ -3,7 +3,7 @@
   "productName": "Gallery",
   "version": "0.1.0",
   "description": "Local Gallery created with ❤️ and powered by Electron and React.js",
-  "main": "./public/electron",
+  "main": "./public/electron.js",
   "keywords": [],
   "author": {
     "name": "legend80s",
@@ -25,7 +25,7 @@
     "prepackage": "npm run build:react",
     "package": "rm -rf dist && electron-builder build --mac --win --publish never",
     "prepackage:mac": "npm run build:react",
-    "package:mac": "electron-builder build --mac --publish never",
+    "package:mac": "rm -rf dist && electron-builder build --mac --publish never",
     "prepackage:windowsx": "npm run build:react",
     "package:windows": "electron-builder build --win --publish never",
     "test": "react-scripts test",
