@@ -1,0 +1,100 @@
+$bright-color: #09d3ac;
+$brighter-color: #02ffcf;
+
+.App {
+  display: flex;
+  height: 100vh;
+  text-align: center;
+}
+
+.App.dark {
+  background-color: #333;
+
+  .icon-wrapper {
+    &.active {
+      border-left-color: $bright-color;
+
+      svg {
+        fill: $bright-color;
+      }
+    }
+
+    svg {
+      fill: #666666;
+    }
+  }
+
+  .menu {
+    border-right-color: #09d3ac54;
+  }
+
+  .no-photo-tips {
+    color: $bright-color;
+
+    .go-home-btn {
+      color: $brighter-color;
+    }
+  }
+}
+
+.main {
+  flex: 1;
+}
+
+.no-photo-tips {
+  margin-top: 12%;
+  font: small-caps bold 1.5rem monaco, consolas;
+
+  .go-home-btn {
+    background: none;
+    border: none;
+    font: inherit;
+    color: #005444;
+    border-bottom: 1px solid;
+    cursor: pointer;
+  }
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  width: 5vmax;
+  min-width: 40px;
+  padding: 5% 0;
+  border-right: 1px solid #eeeeee;
+  box-sizing: border-box;
+
+  .icon-wrapper {
+    padding: 1vw 1.2vw;
+    border: 0.2vw solid transparent;
+    cursor: pointer;
+
+    &:not(:first-of-type) {
+      margin-top: 0.3vw;
+    }
+
+    &.active {
+      border-left-color: #333;
+    }
+
+    &:not(.active) svg {
+      fill: #666666;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .gallery {
+    padding-left: 0.3vw;
+    padding-right: 0.3vw;
+  }
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
