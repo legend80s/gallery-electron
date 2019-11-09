@@ -21,7 +21,7 @@ const {
   getMemorizedTheme,
   memorizePhotos,
   getMemorizedPhotos,
-} = remote.require('../public/electron');
+} = remote.require('../build/electron');
 
 const MENU_KEY_HOME = 'home';
 const MENU_KEY_GALLERY = 'gallery';
