@@ -1,7 +1,7 @@
 {
   "name": "gallery",
   "productName": "Gallery",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Local Gallery created with ❤️ and powered by Electron and React.js",
   "main": "./public/electron.js",
   "keywords": [],
