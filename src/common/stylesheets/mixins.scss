@@ -1,5 +1,5 @@
 $duration: 0.5s;
 
 @mixin color-transition {
-  transition: color $duration, background-color $duration, border-right-color $duration;
+  transition: color $duration, background-color $duration, border-color 0.2s;
 }

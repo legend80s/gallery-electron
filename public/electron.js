@@ -1,24 +1,19 @@
 const { app, BrowserWindow } = require('electron')
+const storage = require('electron-storage-promised');
 
 // 保持对window对象的全局引用，如果不这么做的话，当JavaScript对象被
 // 垃圾回收的时候，window对象将会自动的关闭
 let win;
+let cachedTheme;
+
 const isDev = process.env.ELECTRON_ENV === 'development';
 
-const LIGHT_BG_COLOR = '#ffefd5';
-const DARK_BG_COLOR = '#333333';
-
-const THEME_LIGHT = 'light';
-const THEME_DARK = 'dark';
-
-const theme = getTheme();
-
-function createWindow () {
+async function createWindow () {
   // 创建浏览器窗口。
   win = new BrowserWindow({
     width: 1000,
     height: 666,
-    backgroundColor: theme === THEME_LIGHT ? LIGHT_BG_COLOR : DARK_BG_COLOR,
+    backgroundColor: await getThemeBgColor(),
     webPreferences: {
       nodeIntegration: true,
       // Development can be false to enable load image from local file system
@@ -39,11 +34,14 @@ function createWindow () {
   // win.webContents.openDevTools()
 
   // 当 window 被关闭，这个事件会被触发。
-  win.on('closed', () => {
+  win.on('closed', async () => {
     // 取消引用 window 对象，如果你的应用支持多窗口的话，
     // 通常会把多个 window 对象存放在一个数组里面，
     // 与此同时，你应该删除相应的元素。
-    win = null
+    win = null;
+
+    // console.log('window closed saveTheme', cachedTheme);
+    cachedTheme && saveTheme(cachedTheme);
   });
 }
 
@@ -69,8 +67,54 @@ app.on('activate', () => {
   }
 })
 
-// 在这个文件中，你可以续写应用剩下主进程代码。
-// 也可以拆分成几个文件，然后用 require 导入。
-function getTheme() {
-  return THEME_LIGHT;
+const THEME_LIGHT = 'light';
+const THEME_DARK = 'dark';
+
+async function fetchTheme() {
+  try {
+    const theme = await storage.get('theme');
+
+    // console.log('theme from storage:', theme);
+
+    return theme === THEME_DARK ? THEME_DARK : THEME_LIGHT;
+  } catch (error) {
+    console.error('get theme from storage', error.message);
+
+    return THEME_LIGHT;
+  }
+}
+
+async function getThemeBgColor() {
+  const LIGHT_BG_COLOR = '#ffefd5';
+  const DARK_BG_COLOR = '#333333';
+
+  const theme = await fetchTheme();
+
+  return theme === THEME_DARK ? DARK_BG_COLOR : LIGHT_BG_COLOR;
+}
+
+/**
+ * @param {string} theme
+ */
+exports.saveThemeToCache = function saveThemeToCache(theme) {
+  console.log('saveThemeToCache:', theme);
+  cachedTheme = theme;
+}
+
+/**
+ * @param {string} theme
+ */
+exports.getLatestTheme = function getLatestTheme() {
+  return cachedTheme;
+}
+
+exports.fetchTheme = fetchTheme;
+
+function saveTheme(theme) {
+  if (!theme) { return; }
+  // console.log('saveTheme to storage:', theme);
+
+  storage.set('theme', theme)
+    .then(() => { console.log('theme', theme, ' saved successfully'); })
+    .catch((error) => { console.error('saveTheme', error); });
 }

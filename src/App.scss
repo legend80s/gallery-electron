@@ -89,6 +89,7 @@
     padding: 2vw 1.2vw;
     border: 0.2vw solid transparent;
     cursor: pointer;
+    @include color-transition;
 
     &:not(:first-of-type) {
       margin-top: 0.3vw;

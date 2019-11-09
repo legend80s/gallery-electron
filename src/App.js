@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Gallery } from './components/Gallery';
 
 import './App.scss';
@@ -15,30 +15,41 @@ const isImage = require('is-image');
 const { promisify } = window.require('util');
 const sizeOf = promisify(window.require('image-size'));
 const { extractName } = require('./utils/file');
+const { saveThemeToCache, fetchTheme, getLatestTheme } = remote.require('../public/electron');
 
 const MENU_KEY_HOME = 'home';
 const MENU_KEY_GALLERY = 'gallery';
 
 export const THEME_LIGHT = 'light';
 export const THEME_DARK = 'dark';
-const currentTheme = getTheme();
+const previousTheme = getLatestTheme();
 
 function App() {
-  console.log('currentTheme:', currentTheme);
-
+  // console.log('previousTheme:', previousTheme);
   const [isFooterVisible] = useState(true);
   const [photos, setPhotos] = useState([]);
-  const [theme, setTheme] = useState(currentTheme);
+  const [theme, setTheme] = useState(previousTheme);
   const [currentMenuKey, setCurrentMenuKey] = useState(MENU_KEY_HOME);
 
+  useEffect(() => {
+    fetchTheme().then(theme => {
+      // console.log('fetchTheme in renderer:', theme);
+      setTheme(theme);
+    });
+  }, []);
+
   const toggleTheme = () => {
-    setTheme(theme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT);
+    const newTheme = theme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT;
+
+    setTheme(newTheme);
+    // console.log('toggleTheme to:', newTheme);
+    saveThemeToCache(newTheme);
   };
 
   const openDirectory = async () => {
     const { filePaths = [] } = await remote.dialog.showOpenDialog({ properties: ['openDirectory'] });
 
-    console.log('filePaths:', filePaths);
+    // console.log('filePaths:', filePaths);
     const mediaFolder = filePaths[0];
 
     if (mediaFolder) {
@@ -59,7 +70,7 @@ function App() {
     setCurrentMenuKey(MENU_KEY_HOME);
   };
 
-  console.log('photos:', photos);
+  // console.log('photos:', photos, theme);
 
   return (
     <div className={ `App ${theme}` }>
