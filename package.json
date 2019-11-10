@@ -14,10 +14,10 @@
   "private": true,
   "homepage": "./",
   "scripts": {
-    "start": "concurrently \"BROWSER=none npm run start:react\" \"wait-on http://localhost:3000 && npm run start:electron\"",
+    "dev": "concurrently \"BROWSER=none npm run start:react\" \"wait-on http://localhost:3000 && npm run start:electron\"",
     "start:electron": "npm run start:electron:dev",
-    "start:electron:dev": "ELECTRON_ENV=development electron .",
-    "start:electron:prod": "electron .",
+    "start:electron:dev": "nodemon --verbose --exec \"electron .\"",
+    "start:electron:static": "electron .",
     "start:react": "react-scripts start",
     "build:react": "rm -rf build && react-scripts build",
     "prepack": "npm run build:react",
@@ -36,6 +36,7 @@
     "electron": "^7.0.1",
     "electron-builder": "^22.1.0",
     "node-sass": "^4.13.0",
+    "nodemon": "^1.19.4",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-images": "^1.0.0",
@@ -45,6 +46,7 @@
     "wait-on": "^3.3.0"
   },
   "dependencies": {
+    "electron-is-dev": "^1.1.0",
     "electron-storage-promised": "^1.1.0",
     "image-size": "^0.8.3",
     "is-image": "^3.0.0"

@@ -1,20 +1,19 @@
 const { app, BrowserWindow } = require('electron')
 const storage = require('electron-storage-promised');
+const isDev = require('electron-is-dev');
 
 // 保持对window对象的全局引用，如果不这么做的话，当JavaScript对象被
 // 垃圾回收的时候，window对象将会自动的关闭
 let win;
-let cachedTheme;
+let cachedTheme = '';
 let cachedPhotos = [];
-
-const isDev = process.env.ELECTRON_ENV === 'development';
 
 async function createWindow () {
   // 创建浏览器窗口。
   win = new BrowserWindow({
     width: 1000,
     height: 666,
-    backgroundColor: await getThemeBgColor(),
+    backgroundColor: await fetchThemeBgColor(),
     webPreferences: {
       nodeIntegration: true,
       // Development can be false to enable load image from local file system
@@ -31,11 +30,13 @@ async function createWindow () {
     win.loadFile('./build/index.html');
   }
 
+  win.maximize();
+
   // 打开开发者工具
   // win.webContents.openDevTools()
 
   // 当 window 被关闭，这个事件会被触发。
-  win.on('closed', async () => {
+  win.on('closed', () => {
     // 取消引用 window 对象，如果你的应用支持多窗口的话，
     // 通常会把多个 window 对象存放在一个数组里面，
     // 与此同时，你应该删除相应的元素。
@@ -85,7 +86,7 @@ async function fetchThemeFromStorage() {
   }
 }
 
-async function getThemeBgColor() {
+async function fetchThemeBgColor() {
   const LIGHT_BG_COLOR = '#ffefd5';
   const DARK_BG_COLOR = '#333333';
 
@@ -98,7 +99,7 @@ async function getThemeBgColor() {
  * @param {string} theme
  */
 exports.saveThemeToCache = (theme) => {
-  console.log('saveThemeToCache:', theme);
+  // console.log('saveThemeToCache:', theme);
   cachedTheme = theme;
 }
 

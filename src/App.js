@@ -7,21 +7,26 @@ import "react-toggle/style.css";
 import { DirectoryOpener } from './components/DirectoryOpener';
 import { AppFooter } from './components/AppFooter';
 
+const isImage = require('is-image');
+const { extractName } = require('./utils/file');
+
 const { remote } = window.require('electron');
 const fs = window.require('fs');
 const path = window.require('path');
 const url = window.require('url');
-const isImage = require('is-image');
 const { promisify } = window.require('util');
 const sizeOf = promisify(window.require('image-size'));
-const { extractName } = require('./utils/file');
+const isDev = window.require('electron-is-dev');
+
+// console.log('isDev:', isDev);
+
 const {
   saveThemeToCache,
   fetchThemeFromStorage,
   getMemorizedTheme,
   memorizePhotos,
   getMemorizedPhotos,
-} = remote.require('../build/electron');
+} = remote.require(isDev ? '../public/electron' : '../build/electron');
 
 const MENU_KEY_HOME = 'home';
 const MENU_KEY_GALLERY = 'gallery';
@@ -72,7 +77,7 @@ function App() {
 
       setPhotos(photos);
 
-      console.log('memorizePhotos:', photos);
+      // console.log('memorizePhotos:', photos);
 
       memorizePhotos(photos);
     }
