@@ -83,7 +83,8 @@
   "build": {
     "appId": "com.example.gallery",
     "mac": {
-      "category": "Photo & Video"
+      "category": "Photo & Video",
+      "icon": "build/icon.png"
     },
     "files": [
       "build/"
