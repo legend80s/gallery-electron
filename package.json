@@ -1,12 +1,19 @@
 {
   "name": "gallery",
-  "productName": "Gallery",
+  "productName": "UGallery",
   "version": "0.3.0",
   "description": "Local Gallery created with ❤️ and powered by Electron and React.js",
   "main": "./public/electron.js",
-  "keywords": [],
+  "keywords": [
+    "electron-app",
+    "gallery",
+    "gallery-images",
+    "image-viewer",
+    "photos",
+    "reactjs"
+  ],
   "author": {
-    "name": "legend80s",
+    "name": "刘传宗",
     "email": "chuanzongliu@gmail.com",
     "url": "https://github.com/legend80s"
   },
