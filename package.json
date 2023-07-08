@@ -42,7 +42,7 @@
     "concurrently": "^5.0.0",
     "electron": "^18.3.7",
     "electron-builder": "^22.1.0",
-    "node-sass": "^7.0.3",
+    "node-sass": "^9.0.0",
     "nodemon": "^1.19.4",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
@@ -50,7 +50,7 @@
     "react-photo-gallery": "^8.0.0",
     "react-scripts": "5.0.1",
     "react-toggle": "^4.1.1",
-    "wait-on": "^3.3.0"
+    "wait-on": "^7.0.1"
   },
   "dependencies": {
     "electron-is-dev": "^1.1.0",
